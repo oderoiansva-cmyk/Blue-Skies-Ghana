@@ -1,0 +1,1907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>SVA · Executive Intelligence Experience</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-soft: #0b1727;
+      --card: rgba(15, 29, 48, 0.72);
+      --card-strong: rgba(18, 35, 57, 0.9);
+      --border: rgba(148, 163, 184, 0.13);
+      --text: #f3f7fb;
+      --muted: #94a6ba;
+      --soft: #c4d0dc;
+      --accent: #61d4c3;
+      --accent-soft: rgba(97, 212, 195, 0.10);
+      --accent-border: rgba(97, 212, 195, 0.25);
+      --danger: #ef8f8f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(
+          circle at 78% 12%,
+          rgba(42, 94, 117, 0.16),
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 12% 82%,
+          rgba(26, 79, 94, 0.10),
+          transparent 30%
+        ),
+        var(--bg);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+      min-height: 100vh;
+    }
+
+    .glass {
+      background: var(--card);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+    }
+
+    .glass-strong {
+      background: var(--card-strong);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .soft {
+      color: var(--soft);
+    }
+
+    .accent {
+      color: var(--accent);
+    }
+
+    .divider {
+      border-color: var(--border);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(12px);
+      animation: reveal 0.65s ease forwards;
+    }
+
+    .delay-1 {
+      animation-delay: 0.08s;
+    }
+
+    .delay-2 {
+      animation-delay: 0.16s;
+    }
+
+    .delay-3 {
+      animation-delay: 0.24s;
+    }
+
+    .delay-4 {
+      animation-delay: 0.32s;
+    }
+
+    @keyframes reveal {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .metric-value {
+      letter-spacing: -0.04em;
+    }
+
+    .signal-line {
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .signal-line::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.6em;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 18px rgba(97, 212, 195, 0.35);
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 18px;
+      border-radius: 10px;
+      border: 1px solid var(--accent-border);
+      background: var(--accent-soft);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .cta-button:hover {
+      background: rgba(97, 212, 195, 0.16);
+      border-color: rgba(97, 212, 195, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .access-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(
+          circle at 50% 30%,
+          rgba(42, 94, 117, 0.18),
+          transparent 35%
+        ),
+        rgba(3, 9, 17, 0.97);
+      padding: 24px;
+    }
+
+    .access-box {
+      width: 100%;
+      max-width: 430px;
+      padding: 34px;
+      border-radius: 18px;
+    }
+
+    .access-input {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.035);
+      color: white;
+      outline: none;
+    }
+
+    .access-input:focus {
+      border-color: var(--accent-border);
+      box-shadow: 0 0 0 3px rgba(97, 212, 195, 0.05);
+    }
+
+    .access-button {
+      width: 100%;
+      padding: 13px;
+      border-radius: 9px;
+      border: 1px solid var(--accent-border);
+      background: rgba(97, 212, 195, 0.12);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .access-error {
+      color: var(--danger);
+      font-size: 11px;
+      min-height: 16px;
+      margin-top: 8px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    canvas {
+      max-height: 270px;
+    }
+
+    @media (max-width: 1024px) {
+      .desktop-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      .sticky-rail {
+        position: relative !important;
+        top: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================================================
+       ACCESS LAYER
+       ========================================================= -->
+
+  <div id="accessOverlay" class="access-overlay">
+
+    <div class="access-box glass reveal">
+
+      <div class="eyebrow mb-4">
+        Strategic Value Architect
+      </div>
+
+      <h1 class="text-2xl font-semibold tracking-tight mb-3">
+        Executive Intelligence
+      </h1>
+
+      <p class="muted text-sm leading-6 mb-7">
+        This intelligence experience has been prepared specifically
+        for the intended recipient.
+      </p>
+
+      <input
+        id="accessKey"
+        type="password"
+        class="access-input"
+        placeholder="Enter access key"
+        autocomplete="off"
+      />
+
+      <div id="accessError" class="access-error"></div>
+
+      <button
+        id="accessButton"
+        class="access-button mt-2"
+        onclick="unlockExperience()"
+      >
+        Access briefing
+      </button>
+
+      <div class="mt-6 pt-5 border-t divider">
+        <p class="text-[10px] muted leading-5">
+          Confidential · Prepared by SVA
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       EXPERIENCE
+       ========================================================= -->
+
+  <main id="experience" class="hidden">
+
+    <!-- HEADER -->
+    <header class="max-w-[1440px] mx-auto px-6 lg:px-10 pt-8">
+
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+
+        <div>
+          <div class="eyebrow mb-2">
+            SVA · Executive Intelligence Experience
+          </div>
+
+          <div class="text-xs muted" id="metaLine"></div>
+        </div>
+
+        <div class="text-xs muted">
+          Confidential · Account-specific intelligence
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- MAIN GRID -->
+    <section
+      class="max-w-[1440px] mx-auto px-6 lg:px-10 py-10 desktop-grid"
+      style="
+        display:grid;
+        grid-template-columns:minmax(0, 7fr) minmax(280px, 3fr);
+        gap:32px;
+      "
+    >
+
+      <!-- =====================================================
+           PRIMARY NARRATIVE
+           ===================================================== -->
+
+      <div>
+
+        <!-- THESIS -->
+        <section id="thesisSection" class="reveal"></section>
+
+        <!-- HERO METRICS -->
+        <section
+          id="heroMetrics"
+          class="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-7 reveal delay-1"
+        ></section>
+
+        <!-- NARRATIVE -->
+        <section
+          id="narrative"
+          class="mt-8 space-y-5"
+        ></section>
+
+        <!-- FINAL BRIDGE -->
+        <section
+          id="briefingSection"
+          class="mt-10 reveal"
+        ></section>
+
+      </div>
+
+
+      <!-- =====================================================
+           RIGHT RAIL
+           ===================================================== -->
+
+      <aside class="sticky-rail" style="position:sticky;top:24px;height:max-content;">
+
+        <div
+          id="rail"
+          class="space-y-4 reveal delay-2"
+        ></div>
+
+      </aside>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="max-w-[1440px] mx-auto px-6 lg:px-10 pb-10 pt-5">
+
+      <div
+        class="pt-6 border-t divider flex flex-col md:flex-row md:items-center md:justify-between gap-3"
+      >
+
+        <div class="text-[10px] muted">
+          Strategic Value Architect · SVA
+        </div>
+
+        <div class="text-[10px] muted">
+          Confidential intelligence · Prepared specifically for this account
+        </div>
+
+      </div>
+
+    </footer>
+
+  </main>
+
+
+  <script>
+
+    /* =========================================================
+       SVA CASE
+       ---------------------------------------------------------
+       BLUE SKIES GHANA · Nsawam, Eastern Region
+       Date of issue: 13 October 2026
+       Architecture: G — STRUCTURAL CONSTRAINT
+       Signal: Supply-Side Execution Risk
+       ========================================================= */
+
+    const SVA_CASE = {
+
+      company: "Blue Skies Ghana",
+
+      recipient: "Executive Leadership",
+
+      date: "13 October 2026",
+
+      presentationId: "SVA-BSG-2026-01",
+
+      /*
+       * Client-side access key.
+       *
+       * NOTE:
+       * This is presentation-level gating only.
+       * It is NOT server-side security.
+       */
+      accessKey: "SVA2026",
+
+      briefingUrl: "#",
+
+
+      /* =======================================================
+         THESIS
+         ======================================================= */
+
+      thesis: {
+
+        eyebrow: "Strategic signal",
+
+        title: "The fruit that no longer grows at home.",
+
+        statement:
+          "Blue Skies built a global premium on one operational assertion: fruit harvested, cut and packed in Ghana, on a European shelf within 48 hours. The evidence suggests the input to that assertion is being removed — not by a competitor, and not by price, but by the land itself.",
+
+        subtext:
+          "SVA's assessment isolates a supply-side execution risk that does not appear in the headline numbers, and which becomes materially visible during Q4 peak-season fulfilment."
+
+      },
+
+
+      /* =======================================================
+         HERO METRICS
+         ======================================================= */
+
+      heroMetrics: [
+
+        {
+          label: "Plantation land occupied",
+          value: "280 acres",
+          note: "Fully titled · court orders defied",
+          tone: "accent"
+        },
+
+        {
+          label: "Plantation workforce",
+          value: "500 → 150",
+          note: "70% reduction at Nsawam",
+          tone: "accent"
+        },
+
+        {
+          label: "Group turnover",
+          value: "£30M+",
+          note: "Reported 25% year-on-year growth",
+          tone: "neutral"
+        },
+
+        {
+          label: "The operational promise",
+          value: "48 hrs",
+          note: "Farm to European shelf",
+          tone: "neutral"
+        }
+
+      ],
+
+
+      /* =======================================================
+         ADAPTIVE NARRATIVE
+         ======================================================= */
+
+      narrative: [
+
+        {
+          type: "argument",
+
+          eyebrow: "01 · Observation",
+
+          title: "The headline narrative is expansion. The operating evidence points elsewhere.",
+
+          body:
+            "On the public record, Blue Skies is growing: turnover above £30M, a King's Award for Enterprise, new juice lines, and expansion into neighbouring markets. The same public record documents that the physical base required to sustain that growth is being taken over — on land that is fully registered and titled to the company, and in the face of court orders that have been defied."
+
+        },
+
+
+        {
+          type: "evidence",
+
+          eyebrow: "02 · The land position",
+
+          title: "Three separate land actions against titled, documented company land.",
+
+          body:
+            "At Nsawam, 280 acres of pineapple plantation — including land acquired for staff housing — has been occupied by illegal settlers who have erected unauthorised structures. A separate 50-acre parcel in Nsawam, earmarked for farming and an ultra-modern factory projected to create over 3,000 jobs, has been occupied by encroachers who have begun building. In the Central Region, 100 acres of pineapple farmland were lost to illegal sand winning — land on which the company had planned a £25M investment projected to create over 4,000 jobs.",
+
+          source:
+            "Blue Skies Ghana management statements reported in Ghanaian media; company public disclosures on land encroachment and illegal sand winning."
+
+        },
+
+
+        {
+          type: "metric",
+
+          eyebrow: "03 · The labour consequence",
+
+          title: "The first measurable transmission of the land loss is employment.",
+
+          value: "500 → 150",
+
+          body:
+            "The pineapple plantation workforce at Nsawam has fallen from 500 to 150. The company's stated reason is land litigation and a refusal to engage in physical confrontation. This is not an efficiency gain. It is capacity being withdrawn from the input base that feeds the factories."
+
+        },
+
+
+        {
+          type: "chart",
+
+          eyebrow: "04 · Scale of exposure",
+
+          title: "Land affected by encroachment and illegal activity",
+
+          description:
+            "Acreage documented as occupied, built on, or destroyed across three company sites.",
+
+          chart: {
+
+            type: "bar",
+
+            labels: [
+              "Nsawam plantation",
+              "Central Region",
+              "Nsawam expansion"
+            ],
+
+            datasets: [
+
+              {
+                label: "Acres affected",
+                data: [
+                  280,
+                  100,
+                  50
+                ]
+              }
+
+            ]
+
+          }
+
+        },
+
+
+        {
+          type: "tension",
+
+          eyebrow: "05 · Strategic tension",
+
+          title: "The premium is proximity. The proximity is being removed.",
+
+          body:
+            "The 48-hour model is not a marketing claim. It is a physical consequence of the fruit being cut near where it grows. The company has confirmed that it now imports pineapples and mangoes from neighbouring countries to keep its factories running. Imported fruit feeding a Ghanaian factory reverses the founding logic of value addition at source — and it is the input to a freshness guarantee that the commercial contracts still assume."
+
+        },
+
+
+        {
+          type: "comparison",
+
+          eyebrow: "06 · Where the divergence sits",
+
+          title: "The same company, read two different ways.",
+
+          left: {
+
+            label: "What the headline shows",
+
+            items: [
+              "Turnover above £30M",
+              "Reported 25% year-on-year growth",
+              "King's Award for Enterprise",
+              "New market entry and new juice lines"
+            ]
+
+          },
+
+          right: {
+
+            label: "What the operating evidence shows",
+
+            items: [
+              "280 acres of titled plantation occupied",
+              "Plantation workforce down 70%",
+              "Fruit now imported from neighbouring countries",
+              "Q4 volumes committed against Ghanaian-origin freshness"
+            ]
+
+          }
+
+        },
+
+
+        {
+          type: "signal",
+
+          eyebrow: "07 · SVA signal",
+
+          items: [
+
+            "The premium is defined by proximity to the fruit, not by the fruit itself.",
+
+            "The physical input base is contracting while the commercial commitments expand.",
+
+            "Peak-season delivery performance — not competitor pricing — is where this surfaces first."
+
+          ]
+
+        },
+
+
+        {
+          type: "timeline",
+
+          eyebrow: "08 · Exposure windows",
+
+          title: "When the constraint becomes commercially visible.",
+
+          items: [
+
+            {
+              period: "Q4 2026",
+              title: "Peak-season fulfilment",
+              body:
+                "Christmas and year-end retailer volumes are contracted against the 48-hour Ghanaian freshness guarantee. Substituting imported fruit does not satisfy the premise on which those orders were placed."
+            },
+
+            {
+              period: "H1 2027",
+              title: "Contract renewal window",
+              body:
+                "Annual retailer contracts come up carrying freshness, traceability and delivery-performance clauses that assume Ghanaian origin."
+            },
+
+            {
+              period: "2027–2028",
+              title: "Structural consequence",
+              body:
+                "If the input base continues to erode, the premium is not renegotiated on price. It is reclassified — from a freshness guarantee into a sourcing arrangement."
+            }
+
+          ]
+
+        },
+
+
+        {
+          type: "question",
+
+          eyebrow: "09 · Executive question",
+
+          title:
+            "If the factories can only run on fruit grown somewhere else, what exactly is being sold?",
+
+          body:
+            "This is the unresolved issue SVA believes deserves deeper examination."
+
+        },
+
+
+        {
+          type: "opportunity",
+
+          eyebrow: "10 · What resolution unlocks",
+
+          title: "The premium survives if the input base is secured.",
+
+          body:
+            "Blue Skies' differentiation was never the fruit. It was proximity to the fruit. Securing the remaining titled land, formalising alternative regional supply on terms that preserve origin integrity, and restructuring peak-season sourcing are the levers that protect the 48-hour promise — and the premium that depends on it. None of these are marketing decisions. All of them are operational ones."
+
+        }
+
+      ],
+
+
+      /* =======================================================
+         RIGHT RAIL
+         ======================================================= */
+
+      rail: {
+
+        value: {
+
+          label: "Core signal",
+
+          value: "Supply-Side Execution Risk",
+
+          note:
+            "The premium is defined by proximity. The proximity is being removed."
+
+        },
+
+        decision: {
+
+          label: "Decision lens",
+
+          value: "Input base security",
+
+          note:
+            "Separate commercial growth from the physical capacity required to sustain it."
+
+        },
+
+        metric: {
+
+          label: "Plantation workforce",
+
+          value: "500 → 150",
+
+          note:
+            "Direct consequence of land loss at Nsawam."
+
+        },
+
+        miniChart: {
+
+          enabled: true,
+
+          labels: [
+            "Nsawam",
+            "Central",
+            "Expansion"
+          ],
+
+          data: [
+            280,
+            100,
+            50
+          ]
+
+        }
+
+      },
+
+
+      /* =======================================================
+         UNRESOLVED QUESTION
+         ======================================================= */
+
+      unresolvedQuestion: {
+
+        eyebrow: "What remains unresolved",
+
+        title:
+          "The land loss is documented. The transmission mechanism into retailer contracts is not.",
+
+        body:
+          "The Strategic Briefing maps how input-base degradation converts into peak-season delivery risk, retailer renegotiation exposure and margin compression."
+
+      },
+
+
+      /* =======================================================
+         BRIEFING / CTA
+         ======================================================= */
+
+      briefing: {
+
+        eyebrow: "Strategic Briefing",
+
+        title:
+          "The full SVA assessment goes further.",
+
+        body:
+          "The private Strategic Briefing expands the account-specific evidence, the transmission mechanism from land loss to retailer risk, the Q4 exposure window by account, and the strategic options available for securing the input base without breaching the value-addition-at-source commitment.",
+
+        /*
+         * Primary CTA
+         */
+        ctaLabel:
+          "View your Strategic Briefing",
+
+        ctaUrl:
+          "#",
+
+        /*
+         * Conversation CTA
+         */
+        conversationLabel:
+          "Request a 20-minute conversation",
+
+        conversationEmail:
+          "oderoian.sva@gmail.com"
+
+      }
+
+    };
+
+
+    /* =========================================================
+       UTILITY
+       ========================================================= */
+
+    function escapeHTML(value) {
+
+      if (value === undefined || value === null) {
+        return "";
+      }
+
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* =========================================================
+       THESIS
+       ========================================================= */
+
+    function renderThesis() {
+
+      const t = SVA_CASE.thesis;
+
+      document.getElementById("thesisSection").innerHTML = `
+
+        <div class="max-w-4xl">
+
+          <div class="eyebrow mb-4">
+            ${escapeHTML(t.eyebrow)}
+          </div>
+
+          <h1
+            class="text-4xl md:text-5xl lg:text-[58px]
+                   leading-[1.02] tracking-[-0.045em]
+                   font-semibold"
+          >
+            ${escapeHTML(t.title)}
+          </h1>
+
+          <p
+            class="mt-6 text-lg md:text-xl
+                   leading-8 soft max-w-3xl"
+          >
+            ${escapeHTML(t.statement)}
+          </p>
+
+          <p
+            class="mt-4 text-sm leading-7 muted max-w-2xl"
+          >
+            ${escapeHTML(t.subtext)}
+          </p>
+
+        </div>
+
+      `;
+
+    }
+
+
+    /* =========================================================
+       HERO METRICS
+       ========================================================= */
+
+    function renderHeroMetrics() {
+
+      const container = document.getElementById("heroMetrics");
+
+      container.innerHTML = "";
+
+      SVA_CASE.heroMetrics.forEach(metric => {
+
+        const tone =
+          metric.tone === "accent"
+            ? "accent"
+            : "text-white";
+
+        container.innerHTML += `
+
+          <div class="glass rounded-xl p-5">
+
+            <div class="text-[10px] uppercase tracking-[0.14em] muted">
+              ${escapeHTML(metric.label)}
+            </div>
+
+            <div
+              class="metric-value text-2xl md:text-3xl
+                     font-semibold mt-3 ${tone}"
+            >
+              ${escapeHTML(metric.value)}
+            </div>
+
+            <div class="text-[11px] muted mt-2">
+              ${escapeHTML(metric.note)}
+            </div>
+
+          </div>
+
+        `;
+
+      });
+
+    }
+
+
+    /* =========================================================
+       NARRATIVE BLOCK ROUTER
+       ========================================================= */
+
+    function renderBlock(block, index) {
+
+      switch (block.type) {
+
+        case "argument":
+          return renderArgument(block, index);
+
+        case "tension":
+          return renderTension(block, index);
+
+        case "signal":
+          return renderSignal(block, index);
+
+        case "chart":
+          return renderChartBlock(block, index);
+
+        case "metric":
+          return renderMetricBlock(block, index);
+
+        case "comparison":
+          return renderComparison(block, index);
+
+        case "timeline":
+          return renderTimeline(block, index);
+
+        case "opportunity":
+          return renderOpportunity(block, index);
+
+        case "question":
+          return renderQuestion(block, index);
+
+        case "evidence":
+          return renderEvidence(block, index);
+
+        default:
+          return "";
+
+      }
+
+    }
+
+
+    /* =========================================================
+       ARGUMENT
+       ========================================================= */
+
+    function renderArgument(block, index) {
+
+      return `
+
+        <article class="glass rounded-2xl p-7 md:p-8 reveal">
+
+          <div class="eyebrow mb-3">
+            ${escapeHTML(block.eyebrow || `Observation ${index + 1}`)}
+          </div>
+
+          <h2 class="text-xl md:text-2xl font-semibold tracking-tight">
+            ${escapeHTML(block.title)}
+          </h2>
+
+          <p class="mt-4 text-sm md:text-[15px] leading-7 soft max-w-3xl">
+            ${escapeHTML(block.body)}
+          </p>
+
+        </article>
+
+      `;
+
+    }
+
+
+    /* =========================================================
+       TENSION
+       ========================================================= */
+
+    function renderTension(block) {
+
+      return `
+
+        <article
+          class="rounded-2xl p-7 md:p-8"
+          style="
+            background:rgba(97,212,195,0.045);
+            border:1px solid rgba(97,212,195,0.16);
+          "
+        >
+
+          <div class="eyebrow mb-3">
+            ${escapeHTML(block.eyebrow || "Strategic tension")}
+          </div>
+
+          <h2 class="text-xl md:text-2xl font-semibold tracking-tight">
+            ${escapeHTML(block.title)}
+          </h2>
+
+          <p class="mt-4 text-sm md:text-[15px] leading-7 soft max-w-3xl">
+            ${escapeHTML(block.body)}
+          </p>
+
+        </article>
+
+      `;
+
+    }
+
+
+    /* =========================================================
+       SIGNAL
+       ========================================================= */
+
+    function renderSignal(block) {
+
+      return `
+
+        <article class="glass rounded-2xl p-7 md:p-8">
+
+          <div class="eyebrow mb-5">
+            ${escapeHTML(block.eyebrow || "Signal")}
+          </div>
+
+          <div class="space-y-5">
+
+            ${(block.items || []).map(item => `
+
+              <div class="signal-line">
+
+                <p class="text-sm md:text-[15px] leading-7 soft">
+                  ${escapeHTML(item)}
+                </p>
+
+              </div>
+
+            `).join("")}
+
+          </div>
+
+        </article>
+
+      `;
+
+    }
+
+
+    /* =========================================================
+       CHART
+       ========================================================= */
+
+    function renderChartBlock(block, index) {
+
+      const canvasId = `chart-${index}`;
+
+      setTimeout(() => {
+
+        const canvas = document.getElementById(canvasId);
+
+        if (!canvas) return;
+
+        new Chart(canvas, {
+
+          type: block.chart.type || "line",
+
+          data: {
+
+            labels: block.chart.labels,
+
+            datasets: block.chart.datasets.map((dataset, datasetIndex) => ({
+
+              label: dataset.label,
+
+              data: dataset.data,
+
+              borderColor:
+                datasetIndex === 0
+                  ? "#61d4c3"
+                  : "rgba(148,163,184,0.55)",
+
+              backgroundColor:
+                datasetIndex === 0
+                  ? "rgba(97,212,195,0.08)"
+                  : "rgba(148,163,184,0.04)",
+
+              borderWidth: 2,
+
+              pointRadius: 3,
+
+              pointHoverRadius: 5,
+
+              tension: 0.35,
+
+              fill: datasetIndex === 0
+
+            }))
+
+          },
+
+          options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+              legend: {
+
+                labels: {
+
+                  color: "#94a6ba",
+
+                  font: {
+                    family: "Inter",
+                    size: 10
+                  }
+
+                }
+
+              }
+
+            },
+
+            scales: {
+
+              x: {
+
+                ticks: {
+                  color: "#708298"
+                },
+
+                grid: {
+                  color: "rgba(148,163,184,0.06)"
+                }
+
+              },
+
+              y: {
+
+                ticks: {
+                  color: "#708298"
+                },
+
+                grid: {
+                  color: "rgba(148,163,184,0.06)"
+                }
+
+              }
+
+            }
+
+          }
+
+        });
+
+      }, 50);
+
+      return `
+
+        <article class="glass rounded-2xl p-7 md:p-8">
+
+          <div class="eyebrow mb-3">
+            ${escapeHTML(block.eyebrow || "Performance")}
+          </div>
+
+          <h2 class="text-xl md:text-2xl font-semibold tracking-tight">
+            ${escapeHTML(block.title)}
+          </h2>
+
+          <p class="text-sm muted leading-6 mt-3 max-w-2xl">
+            ${escapeHTML(block.description || "")}
+          </p>
+
+          <div class="mt-7 h-[270px]">
+            <canvas id="${canvasId}"></canvas>
+          </div>
+
+        </article>
+
+      `;
+
+    }
+
+
+    /* =========================================================
+       METRIC
+       ========================================================= */
+
+    function renderMetricBlock(block) {
+
+      return `
+
+        <article class="glass rounded-2xl p-7">
+
+          <div class="eyebrow mb-4">
+            ${escapeHTML(block.eyebrow || "Metric")}
+          </div>
+
+          <div class="text-4xl font-semibold tracking-tight">
+            ${escapeHTML(block.value)}
+          </div>
+
+          <h2 class="text-lg font-semibold mt-4">
+            ${escapeHTML(block.title)}
+          </h2>
+
+          <p class="text-sm muted leading-7 mt-3 max-w-2xl">
+            ${escapeHTML(block.body)}
+          </p>
+
+        </article>
+
+      `;
+
+    }
+
+
+    /* =========================================================
+       COMPARISON
+       ========================================================= */
+
+    function renderComparison(block) {
+
+      return `
+
+        <article class="glass rounded-2xl p-7 md:p-8">
+
+          <div class="eyebrow mb-3">
+            ${escapeHTML(block.eyebrow || "Comparison")}
+          </div>
+
+          <h2 class="text-xl md:text-2xl font-semibold tracking-tight">
+            ${escapeHTML(block.title)}
+          </h2>
+
+          <div class="grid md:grid-cols-2 gap-4 mt-7">
+
+            <div
+              class="rounded-xl p-5"
+              style="
+                background:rgba(255,255,255,0.025);
+                border:1px solid var(--border);
+              "
+            >
+
+              <div class="text-xs font-semibold mb-4">
+                ${escapeHTML(block.left.label)}
+              </div>
+
+              <div class="space-y-3">
+
+                ${block.left.items.map(item => `
+
+                  <div class="text-sm muted leading-6">
+                    ${escapeHTML(item)}
+                  </div>
+
+                `).join("")}
+
+              </div>
+
+            </div>
+
+
+            <div
+              class="rounded-xl p-5"
+              style="
+                background:rgba(255,255,255,0.025);
+                border:1px solid var(--border);
+              "
+            >
+
+              <div class="text-xs font-semibold mb-4">
+                ${escapeHTML(block.right.label)}
+              </div>
+
+              <div class="space-y-3">
+
+                ${block.right.items.map(item => `
+
+                  <div class="text-sm muted leading-6">
+                    ${escapeHTML(item)}
+                  </div>
+
+                `).join("")}
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      `;
+
+    }
+
+
+    /* =========================================================
+       TIMELINE
+       ========================================================= */
+
+    function renderTimeline(block) {
+
+      return `
+
+        <article class="glass rounded-2xl p-7 md:p-8">
+
+          <div class="eyebrow mb-3">
+            ${escapeHTML(block.eyebrow || "Timeline")}
+          </div>
+
+          <h2 class="text-xl md:text-2xl font-semibold tracking-tight">
+            ${escapeHTML(block.title)}
+          </h2>
+
+          <div class="mt-7 space-y-5">
+
+            ${(block.items || []).map(item => `
+
+              <div class="flex gap-5">
+
+                <div
+                  class="w-[72px] shrink-0
+                         text-xs font-semibold accent"
+                >
+                  ${escapeHTML(item.period)}
+                </div>
+
+                <div>
+
+                  <div class="text-sm font-semibold">
+                    ${escapeHTML(item.title)}
+                  </div>
+
+                  <p class="text-sm muted leading-6 mt-1">
+                    ${escapeHTML(item.body)}
+                  </p>
+
+                </div>
+
+              </div>
+
+            `).join("")}
+
+          </div>
+
+        </article>
+
+      `;
+
+    }
+
+
+    /* =========================================================
+       OPPORTUNITY
+       ========================================================= */
+
+    function renderOpportunity(block) {
+
+      return `
+
+        <article
+          class="rounded-2xl p-7 md:p-8"
+          style="
+            background:linear-gradient(
+              135deg,
+              rgba(97,212,195,0.09),
+              rgba(15,29,48,0.65)
+            );
+            border:1px solid rgba(97,212,195,0.15);
+          "
+        >
+
+          <div class="eyebrow mb-3">
+            ${escapeHTML(block.eyebrow || "Strategic opportunity")}
+          </div>
+
+          <h2 class="text-xl md:text-2xl font-semibold tracking-tight">
+            ${escapeHTML(block.title)}
+          </h2>
+
+          <p class="mt-4 text-sm md:text-[15px] leading-7 soft max-w-3xl">
+            ${escapeHTML(block.body)}
+          </p>
+
+        </article>
+
+      `;
+
+    }
+
+
+    /* =========================================================
+       QUESTION
+       ========================================================= */
+
+    function renderQuestion(block) {
+
+      return `
+
+        <article class="glass-strong rounded-2xl p-7 md:p-8">
+
+          <div class="eyebrow mb-3">
+            ${escapeHTML(block.eyebrow || "Executive question")}
+          </div>
+
+          <h2
+            class="text-xl md:text-2xl
+                   font-semibold tracking-tight
+                   leading-8"
+          >
+            ${escapeHTML(block.title)}
+          </h2>
+
+          <p class="mt-4 text-sm leading-7 muted max-w-3xl">
+            ${escapeHTML(block.body)}
+          </p>
+
+        </article>
+
+      `;
+
+    }
+
+
+    /* =========================================================
+       EVIDENCE
+       ========================================================= */
+
+    function renderEvidence(block) {
+
+      return `
+
+        <article class="glass rounded-2xl p-7">
+
+          <div class="eyebrow mb-3">
+            ${escapeHTML(block.eyebrow || "Evidence")}
+          </div>
+
+          <h2 class="text-xl font-semibold">
+            ${escapeHTML(block.title)}
+          </h2>
+
+          <p class="text-sm muted leading-7 mt-4">
+            ${escapeHTML(block.body)}
+          </p>
+
+          ${
+            block.source
+              ? `
+                <div class="mt-5 pt-4 border-t divider">
+                  <div class="text-[10px] uppercase tracking-[0.12em] muted">
+                    Source
+                  </div>
+
+                  <div class="text-xs soft mt-2">
+                    ${escapeHTML(block.source)}
+                  </div>
+                </div>
+              `
+              : ""
+          }
+
+        </article>
+
+      `;
+
+    }
+
+
+    /* =========================================================
+       RIGHT RAIL
+       ========================================================= */
+
+    function renderRail() {
+
+      const r = SVA_CASE.rail;
+
+      document.getElementById("rail").innerHTML = `
+
+        <!-- CORE VALUE -->
+
+        <div class="glass rounded-2xl p-6">
+
+          <div class="eyebrow mb-3">
+            ${escapeHTML(r.value.label)}
+          </div>
+
+          <div class="text-xl font-semibold tracking-tight">
+            ${escapeHTML(r.value.value)}
+          </div>
+
+          <p class="text-xs muted leading-6 mt-3">
+            ${escapeHTML(r.value.note)}
+          </p>
+
+        </div>
+
+
+        <!-- DECISION LENS -->
+
+        <div class="glass rounded-2xl p-6">
+
+          <div class="eyebrow mb-3">
+            ${escapeHTML(r.decision.label)}
+          </div>
+
+          <div class="text-lg font-semibold">
+            ${escapeHTML(r.decision.value)}
+          </div>
+
+          <p class="text-xs muted leading-6 mt-3">
+            ${escapeHTML(r.decision.note)}
+          </p>
+
+        </div>
+
+
+        <!-- METRIC -->
+
+        <div class="glass rounded-2xl p-6">
+
+          <div class="eyebrow mb-3">
+            ${escapeHTML(r.metric.label)}
+          </div>
+
+          <div class="text-3xl font-semibold metric-value accent">
+            ${escapeHTML(r.metric.value)}
+          </div>
+
+          <p class="text-xs muted leading-6 mt-3">
+            ${escapeHTML(r.metric.note)}
+          </p>
+
+        </div>
+
+
+        ${
+          r.miniChart && r.miniChart.enabled
+            ? `
+              <div class="glass rounded-2xl p-6">
+
+                <div class="eyebrow mb-4">
+                  Acres affected by site
+                </div>
+
+                <div class="h-[150px]">
+                  <canvas id="miniChart"></canvas>
+                </div>
+
+              </div>
+            `
+            : ""
+        }
+
+
+        <!-- UNRESOLVED QUESTION -->
+
+        <div
+          class="rounded-2xl p-6"
+          style="
+            background:rgba(97,212,195,0.045);
+            border:1px solid rgba(97,212,195,0.14);
+          "
+        >
+
+          <div class="eyebrow mb-3">
+            ${escapeHTML(SVA_CASE.unresolvedQuestion.eyebrow)}
+          </div>
+
+          <div class="text-sm font-semibold leading-6">
+            ${escapeHTML(SVA_CASE.unresolvedQuestion.title)}
+          </div>
+
+          <p class="text-xs muted leading-6 mt-3">
+            ${escapeHTML(SVA_CASE.unresolvedQuestion.body)}
+          </p>
+
+        </div>
+
+      `;
+
+
+      if (r.miniChart && r.miniChart.enabled) {
+
+        const ctx = document
+          .getElementById("miniChart")
+          .getContext("2d");
+
+        new Chart(ctx, {
+
+          type: "bar",
+
+          data: {
+
+            labels: r.miniChart.labels,
+
+            datasets: [{
+
+              data: r.miniChart.data,
+
+              borderColor: "#61d4c3",
+
+              backgroundColor: "rgba(97,212,195,0.18)",
+
+              borderWidth: 2,
+
+              pointRadius: 2,
+
+              tension: 0.4,
+
+              fill: true
+
+            }]
+
+          },
+
+          options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+              legend: {
+                display: false
+              }
+            },
+
+            scales: {
+
+              x: {
+                ticks: {
+                  color: "#708298",
+                  font: {
+                    family: "Inter",
+                    size: 9
+                  }
+                },
+                grid: {
+                  display: false
+                }
+              },
+
+              y: {
+                display: false
+              }
+
+            }
+
+          }
+
+        });
+
+      }
+
+    }
+
+
+    /* =========================================================
+       BRIEFING / CTA
+       ========================================================= */
+
+    function renderBriefing() {
+
+      const b = SVA_CASE.briefing;
+
+      document.getElementById("briefingSection").innerHTML = `
+
+        <div
+          class="rounded-2xl p-8 md:p-10"
+          style="
+            background:
+              linear-gradient(
+                135deg,
+                rgba(20,42,61,0.92),
+                rgba(8,18,31,0.95)
+              );
+            border:1px solid rgba(97,212,195,0.15);
+          "
+        >
+
+          <div class="eyebrow mb-4">
+            ${escapeHTML(b.eyebrow)}
+          </div>
+
+          <h2
+            class="text-2xl md:text-3xl
+                   font-semibold tracking-tight"
+          >
+            ${escapeHTML(b.title)}
+          </h2>
+
+          <p
+            class="mt-4 text-sm md:text-[15px]
+                   leading-7 soft max-w-3xl"
+          >
+            ${escapeHTML(b.body)}
+          </p>
+
+
+          <!-- PRIMARY BRIEFING CTA -->
+
+          <div class="mt-7">
+
+            <a
+              href="${escapeHTML(b.ctaUrl)}"
+              class="cta-button"
+            >
+
+              ${escapeHTML(b.ctaLabel)}
+
+              <span aria-hidden="true">
+                →
+              </span>
+
+            </a>
+
+          </div>
+
+
+          <!-- CONVERSATION CTA -->
+
+          <div class="mt-8 pt-7 border-t divider">
+
+            <div class="text-xs muted mb-3">
+              Prefer to discuss the assessment directly?
+            </div>
+
+            <a
+              href="mailto:${escapeHTML(b.conversationEmail)}?subject=SVA%20%E2%80%94%2020-minute%20conversation"
+              class="cta-button"
+            >
+
+              ${escapeHTML(b.conversationLabel)}
+
+              <span aria-hidden="true">
+                →
+              </span>
+
+            </a>
+
+            <div class="mt-3 text-xs muted">
+              ${escapeHTML(b.conversationEmail)}
+            </div>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }
+
+
+    /* =========================================================
+       META
+       ========================================================= */
+
+    function renderMeta() {
+
+      document.getElementById("metaLine").innerHTML = `
+
+        ${escapeHTML(SVA_CASE.company)}
+        <span class="mx-2 opacity-40">·</span>
+        ${escapeHTML(SVA_CASE.recipient)}
+        <span class="mx-2 opacity-40">·</span>
+        ${escapeHTML(SVA_CASE.date)}
+
+      `;
+
+    }
+
+
+    /* =========================================================
+       INITIALIZE
+       ========================================================= */
+
+    function initializeExperience() {
+
+      renderMeta();
+
+      renderThesis();
+
+      renderHeroMetrics();
+
+      const narrative =
+        document.getElementById("narrative");
+
+      narrative.innerHTML = "";
+
+      SVA_CASE.narrative.forEach((block, index) => {
+
+        narrative.innerHTML +=
+          renderBlock(block, index);
+
+      });
+
+      renderRail();
+
+      renderBriefing();
+
+    }
+
+
+    /* =========================================================
+       ACCESS
+       ========================================================= */
+
+    function unlockExperience() {
+
+      const entered =
+        document.getElementById("accessKey").value;
+
+      const error =
+        document.getElementById("accessError");
+
+      if (entered === SVA_CASE.accessKey) {
+
+        document
+          .getElementById("accessOverlay")
+          .classList.add("hidden");
+
+        document
+          .getElementById("experience")
+          .classList.remove("hidden");
+
+        initializeExperience();
+
+      } else {
+
+        error.textContent =
+          "Access key not recognised.";
+
+      }
+
+    }
+
+
+    /* =========================================================
+       ENTER KEY SUPPORT
+       ========================================================= */
+
+    document
+      .getElementById("accessKey")
+      .addEventListener("keydown", function(event) {
+
+        if (event.key === "Enter") {
+
+          unlockExperience();
+
+        }
+
+      });
+
+  </script>
+
+</body>
+</html>
